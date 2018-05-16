@@ -1,9 +1,62 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <string.h>
 
 int verPrimo=0;
 long int primo1, primo2;
+long int textocrip[1000];
+
+void descriptografar()
+{
+    //perguntar ao lucas se precisa verificar cada codição dos elementos!!!!
+    long long int P, Q, e;
+    int i;
+
+    printf("Digite os 3 valores para P, Q e E respectivamente: \n");
+    scanf("%lld%lld%lld", &P, &Q, &e);
+
+    for(i=0; i<)
+
+
+}
+
+
+
+ void criptografar()
+ {
+    int i;
+    char texto[100];
+    long long int n,e,C,aux, auxiliadora, auxtext, acumuladora=0;
+
+    printf("Escreva um texto:\n");
+    //scanf("%[^\n]s", texto);
+    fgets(texto, 1000, stdin);
+    printf("Digite o valor n da chave publica:\n");
+    scanf("%lld", &n);
+    printf("Digite o valor e da chave publica:\n");
+    scanf("%lld", &e);
+
+   for(i=0; i< strlen(texto); i++){
+        auxtext = texto[i];
+        aux = pow(auxtext,e);
+        printf("%lld\n", texto[i]);
+        C = aux % n;
+        textocrip[i] = C;
+        acumuladora++;
+    }
+
+    for(i=0; i < acumuladora; i++){
+
+        printf("%lld ", textocrip[i]);
+    }
+    printf("\n");
+
+
+
+
+ }
+
 
 long int euclides(long int e, long int mult)
 {
@@ -95,6 +148,7 @@ long int gerarChavePublica()
             scanf("%ld", &e);
             euclidizinho = euclides(e, mult);
         }
+        printf("Valor E eh valido");
 
 
 }
@@ -110,11 +164,23 @@ int main()
     printf("3 - Descriptografar\n\n");
 
     scanf("%d", &opcao);
+    getchar();
 
     if(opcao == 1)
     {
         gerarChavePublica();
     }
-
+    else if(opcao == 2)
+    {
+        criptografar();
+    }
+    else if(opcao == 3)
+    {
+        descriptografar();
+    }
+    else
+    {
+        printf("Opcao invalida!\n");
+    }
 
 }
