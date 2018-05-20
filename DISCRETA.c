@@ -10,18 +10,58 @@ long int textocrip[1000];
 void descriptografar()
 {
     //perguntar ao lucas se precisa verificar cada codição dos elementos!!!!
-    long long int P, Q, e;
-    int i;
+    long long int e, pq, r, q, a[1000], conta = 0;
+    long long int salvo[1000] = {0};
+    long long int st[1000];
+    int i=0, j=1, k=0;
 
-    printf("Digite os 3 valores para P, Q e E respectivamente: \n");
-    scanf("%lld%lld%lld", &P, &Q, &e);
+    printf("Digite o valor de E e (P-1)*(Q-1): \n");
+    scanf("%lld %lld", &e, &pq);
 
-    for(i=0; i<)
+
+    for(i=0; r!=1; i++)
+    {
+        q = e/pq;
+        conta++;
+        r = e%pq;
+        e = pq;
+        pq = r;
+
+        a[i] = q;
+    }
+
+    for(i=conta-1; i>=0; i--)
+    {
+            salvo[j] =  a[i];
+            j++;
+    }
+
+    salvo[0] = 1;
+    //printf("%lld %lld", salvo[0], salvo[1]);
+    j=0;
+
+    while(salvo[j] != 0)
+    {
+        if(k==0)
+        {
+            st[k] = salvo[0];
+        }
+        else
+        {
+            st[k] = salvo[j] * st[j-1] + st[j-2];
+        }
+
+        printf("%lld\n", st[k]);
+
+        k++;
+        j++;
+
+
+    }
+
 
 
 }
-
-
 
  void criptografar()
  {
