@@ -9,23 +9,27 @@ long int textocrip[1000];
 long int inverso;
 
 long long int querod(long int e){
+
     int i,d=1;
 
-        for(i=1;(d*e)%inverso!=1; i++){
+        for(i=1;(d*e)%inverso!=1; i++)
+        {
                 d=i;
-
         }
+
     return d;
+
 }
 
 
-long int expModular(long long int a, long long int b, long long int n)
-{
+long int expModular(long long int a, long long int b, long long int n){
+
     long int i,resul=1;
 
     if(n==1) return 0;
 
-    for(i=0; i < b; i++){
+    for(i=0; i < b; i++)
+    {
         resul = (resul*a) % n;
     }
 
@@ -33,8 +37,7 @@ long int expModular(long long int a, long long int b, long long int n)
 
 }
 
-void descriptografar()
-{
+void descriptografar(){
 
     long long int d, p, q, contad=0;
     long long int mensagem[100], mensagemC[100];
@@ -71,8 +74,8 @@ void descriptografar()
 	fclose(descript);
 }
 
- void criptografar()
- {
+ void criptografar(){
+
     int i=0;
     char texto[100];
     long long int n,e,C,aux, auxiliadora, auxtext, acumuladora = 0;
@@ -115,8 +118,8 @@ void descriptografar()
  }
 
 
-long int euclides(long int e, long int mult)
-{
+long int euclides(long int e, long int mult){
+
     long int aux;
 
     if(e%mult==0)
@@ -129,11 +132,13 @@ long int euclides(long int e, long int mult)
         mult = e%mult;
         e = aux;
     }
+
     euclides(e,mult);
+
 }
 
-long int verificarPrimo(long int primo)
-{
+long int verificarPrimo(long int primo){
+
     int i, j;
     long long int cont=0;
 
@@ -159,12 +164,13 @@ long int verificarPrimo(long int primo)
 
 }
 
-long int gerarChavePublica()
-{
+long int gerarChavePublica(){
+
         long int coloqueinoarquivo,pri1, pri2, mult = 0, e, euclidizinho=0;
         char opcao;
 
         FILE *chavepublic, *privateD;
+
         chavepublic = fopen("chavepublic.txt","w");
         fclose(chavepublic);
         privateD = fopen("privateD.txt","w");
@@ -229,14 +235,16 @@ long int gerarChavePublica()
             }
 
             printf("\nValor E eh valido\n");
+
+            //PRIVATE KEY
             coloqueinoarquivo = querod(e);
+
             chavepublic = fopen("chavepublic.txt","r+");
-            fprintf(chavepublic,"%ld %ld", primo1*primo2, e);
+            fprintf(chavepublic,"N = %ld, E = %ld", primo1*primo2, e);
             fclose (chavepublic);
             privateD = fopen("privateD.txt", "r+");
-            fprintf(chavepublic, "%ld", coloqueinoarquivo);
+            fprintf(chavepublic, "D = %ld, P = %ld, Q = %ld", coloqueinoarquivo, primo1, primo2);
             fclose(privateD);
-
 
 }
 
