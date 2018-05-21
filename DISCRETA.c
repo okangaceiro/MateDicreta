@@ -6,13 +6,23 @@
 int verPrimo=0;
 long int primo1, primo2;
 long int textocrip[1000];
+long int inverso;
 
-/*Calculado conforme a aula
-Formula: a^b mod n  */
+long long int querod(long int e){
+    int i,d=1;
+
+        for(i=1;(d*e)%inverso!=1; i++){
+                d=i;
+
+        }
+    return d;
+}
+
+
 long int expModular(long long int a, long long int b, long long int n)
 {
     long int i,resul=1;
-    
+
     if(n==1) return 0;
 
     for(i=0; i < b; i++){
@@ -20,97 +30,19 @@ long int expModular(long long int a, long long int b, long long int n)
     }
 
     return resul;
-}
 
-    long long int A = a, P = 1, E = e;
-
-	while(1){
-
-		if(E == 0)
-			return P;
-
-		else if(E%2 != 0){
-			P = (A * P)%n;
-			E = (E-1)/2;
-		}
-
-		else{
-			E = E/2;
-		}
-		A = (A*A)%n;
-	}
 }
 
 void descriptografar()
 {
-    //perguntar ao lucas se precisa verificar cada codição dos elementos!!!!
-    long long int aux,e, p, q, r, pq, a[1000], conta = 0, t=0, s=0;
-    long long int salvo[1000] = {0};
-    long long int st[1000];
+
+    long long int d, p, q, contad=0;
     long long int mensagem[100], mensagemC[100];
-    int i=0, j=1, k=0,contad=0;
+    int i=0;
     FILE *descript;
 
-
-    printf("Digite o valor de E, P e Q: \n");
-    scanf("%lld %lld %lld", &e, &p, &q);
-    pq = (p-1)*(q-1);
-    if(e<pq){
-        aux=pq;
-        pq=e;
-        e=aux;
-    }
-    for(i=0; r!=1; i++)
-    {
-        q = e/pq;
-        conta++;
-        r = e%pq;
-        e = pq;
-        pq = r;
-
-        a[i] = q;
-    }
-
-    for(i=conta-1; i>=0; i--)
-    {
-            salvo[j] =  a[i];
-            j++;
-    }
-
-    salvo[0] = 1;
-    //printf("%lld %lld", salvo[0], salvo[1]);
-    j=0;
-    while(salvo[j] != 0)
-    {
-        if(k==0)
-        {
-            st[k] = salvo[0];
-        }
-        else
-        {
-            st[k] = salvo[j] * st[j-1] + st[j-2];
-        }
-
-
-        k++;
-        j++;
-    }
-
-    //printf("%lld\n", st[k-2]);
-
-    if(conta%2!=0)
-    {
-        t = st[k-1]*(-1);
-        s = st[k-2];
-    }
-    else
-    {
-        t = st[k-1];
-        s = st[k-2]*(-1);
-    }
-
-
-    printf("%lld\n%lld", s, t);
+    printf("Digite o valor de D, P e Q: \n");
+    scanf("%lld %lld %lld", &d, &p, &q);
 
     descript = fopen("descriptar.txt","w");
     fclose(descript);
@@ -124,10 +56,11 @@ void descriptografar()
         if(mensagemC[i]==-1) break;
     }
 
-    for(i = 0; i < contad-1; i++){
-		mensagem[i] = expModular(mensagemC[i], s, p*q);
-		printf("%lld ", mensagem[i]);
+    for(i = 0; i < contad-1; i++)
+    {
+		mensagem[i] = expModular(mensagemC[i], d, p*q);
 	}
+
 	descript = fopen("descriptar.txt","r+");
 
 	for(i = 0; i < contad-1; i++)
@@ -146,28 +79,38 @@ void descriptografar()
     FILE *cripto;
     cripto = fopen("cripto.txt","w");
     fclose (cripto);
-    printf("Escreva um texto:\n");
-    //scanf("%[^\n]s", texto);
+
+
+    printf("\nEscreva um texto:\n");
     fgets(texto, 1000, stdin);
+
     printf("Digite o valor n da chave publica:\n");
     scanf("%lld", &n);
+
     printf("Digite o valor e da chave publica:\n");
     scanf("%lld", &e);
-    for(i = 0; i < strlen(texto); i++){
-            aux = texto[i];
+
+    for(i = 0; i < strlen(texto); i++)
+    {
+
+        aux = texto[i];
 		textocrip[i] = expModular(aux, e, n);
-            aux=0;
+        aux=0;
 		acumuladora++;
+
 	}
+
 	cripto = fopen("cripto.txt","r+");
 
-    for(i=0; i < acumuladora; i++){
+    for(i=0; i < acumuladora; i++)
+    {
 
         fprintf(cripto,"%lld ", textocrip[i]);
+
     }
+
     printf("\n");
     fclose (cripto);
-
 
  }
 
@@ -191,7 +134,8 @@ long int euclides(long int e, long int mult)
 
 long int verificarPrimo(long int primo)
 {
-    int i, j, cont=0;
+    int i, j;
+    long long int cont=0;
 
     verPrimo = 0;
 
@@ -217,58 +161,82 @@ long int verificarPrimo(long int primo)
 
 long int gerarChavePublica()
 {
-        long int pri1, pri2, mult = 0, e, euclidizinho=0;
-        FILE *chavepublic;
+        long int coloqueinoarquivo,pri1, pri2, mult = 0, e, euclidizinho=0;
+        char opcao;
+
+        FILE *chavepublic, *privateD;
         chavepublic = fopen("chavepublic.txt","w");
         fclose(chavepublic);
+        privateD = fopen("privateD.txt","w");
+        fclose(privateD);
 
-        printf("\nDigite um par de numeros primos P e Q: \n");
-        scanf("%ld %ld", &primo1, &primo2);
+        printf("\nVoce ira querer numeros primos para P e Q? (S ou N)\n");
 
-        pri1 = verificarPrimo(primo1);
-        pri2 = verificarPrimo(primo2);
+        scanf("%c", &opcao);
 
-        if(pri1==0 || pri2==0)
+        if(opcao == 'S')
         {
-            while(pri1==0)
-            {
-                printf("O numero P nao eh primo, por favor, digite outro valor: \n");
-                scanf("%ld", &primo1);
 
-                pri1 = verificarPrimo(primo1);
-
-            }
-            while(pri2==0)
-            {
-                printf("O numero Q nao eh primo, por favor, digite outro valor: \n");
-                scanf("%ld", &primo2);
-
-                pri2 = verificarPrimo(primo2);
-            }
+            printf("\n2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59\n 61 67 71 73 79 83 89 97 101 103 107\n 109 113 127 131 137\n");
+            printf("139 149 151 157 163 167 173 179 181 191 193 197\n 199 211 223 227 229 233 239 241 251 257\n 263 269 271 277 281 283 293\n");
 
         }
+            printf("\nDigite dois numeros primos P e Q: \n");
+            scanf("%ld %ld", &primo1, &primo2);
 
-        printf("Numeros P e Q sao primos!\n");
+            pri1 = verificarPrimo(primo1);
+            pri2 = verificarPrimo(primo2);
 
-        printf("P = %ld  Q = %ld\n", primo1, primo2);
+            if(pri1==0 || pri2==0)
+            {
+                while(pri1==0)
+                {
+                    printf("O numero P nao eh primo, por favor, digite outro valor: \n");
+                    scanf("%ld", &primo1);
 
-        mult = (primo1-1)*(primo2-1);
+                    pri1 = verificarPrimo(primo1);
 
-        printf("Digite um numero E relativamente primo a (p-1)(q-1) = %ld\n", mult);
-        scanf("%ld", &e);
+                }
+                while(pri2==0)
+                {
+                    printf("O numero Q nao eh primo, por favor, digite outro valor: \n");
+                    scanf("%ld", &primo2);
 
-        euclidizinho = euclides(e, mult);
+                    pri2 = verificarPrimo(primo2);
+                }
 
-        while(euclidizinho!=1)
-        {
-            printf("Digite um outro valor valido para E: \n");
+            }
+
+            printf("\nNumeros P e Q sao primos!\n");
+
+            printf("P = %ld  Q = %ld\n", primo1, primo2);
+
+            mult = (primo1-1)*(primo2-1);
+            inverso = mult;
+
+            printf("Digite um numero E relativamente primo a (p-1)(q-1) = %ld\n", mult);
             scanf("%ld", &e);
+
             euclidizinho = euclides(e, mult);
-        }
-        printf("Valor E eh valido");
-        chavepublic = fopen("chavepublic.txt","r+");
-        fprintf(chavepublic,"%ld %ld", primo1*primo2, e);
-        fclose (chavepublic);
+
+            while(euclidizinho!=1)
+            {
+
+                printf("\nDigite um outro valor valido para E: \n");
+                scanf("%ld", &e);
+                euclidizinho = euclides(e, mult);
+
+            }
+
+            printf("\nValor E eh valido\n");
+            coloqueinoarquivo = querod(e);
+            chavepublic = fopen("chavepublic.txt","r+");
+            fprintf(chavepublic,"%ld %ld", primo1*primo2, e);
+            fclose (chavepublic);
+            privateD = fopen("privateD.txt", "r+");
+            fprintf(chavepublic, "%ld", coloqueinoarquivo);
+            fclose(privateD);
+
 
 }
 
