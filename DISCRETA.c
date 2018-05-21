@@ -9,37 +9,18 @@ long int textocrip[1000];
 
 /*Calculado conforme a aula
 Formula: a^b mod n  */
-long long int expModular(long long int a, long long int b, long long int n){
-    long long int z = 0;
-    if(b==0){
-        return 1;
-    };
-    z = expModular(a, floor(b/2), n) % n;
-    if(b%2 == 0){
-        return (z*z) % n;
-    }else{
-        return (z*z*a) % n ;
-    }
-}
+long int expModular(long long int a, long long int b, long long int n)
+{
+    long int i,resul=1;
+    
+    if(n==1) return 0;
 
-long long int* euclidesEstendido(long long int a,long long int b){
-    long long int *vetEuclides;
-    long long int d = 0;
-    vetEuclides = (long long int*) malloc(3*sizeof(long long int));
-    if (b == 0){
-        vetEuclides[0] = 1;
-        vetEuclides[1] = 0;
-        vetEuclides[2] = a;
-        return vetEuclides;
+    for(i=0; i < b; i++){
+        resul = (resul*a) % n;
     }
-    vetEuclides = euclidesEstendido(b, a%b);
-    vetEuclides[0] = b;
-    vetEuclides[1] = a - (floor(a/b)*b);
-    vetEuclides[2] = vetEuclides[2];
-    return vetEuclides;
-}
 
-long long int potencia(long long int a, long long int e, long long int n){
+    return resul;
+}
 
     long long int A = a, P = 1, E = e;
 
@@ -63,7 +44,7 @@ long long int potencia(long long int a, long long int e, long long int n){
 void descriptografar()
 {
     //perguntar ao lucas se precisa verificar cada codição dos elementos!!!!
-    long long int e, p, q, r, pq, a[1000], conta = 0, t=0, s=0;
+    long long int aux,e, p, q, r, pq, a[1000], conta = 0, t=0, s=0;
     long long int salvo[1000] = {0};
     long long int st[1000];
     long long int mensagem[100], mensagemC[100];
@@ -74,7 +55,11 @@ void descriptografar()
     printf("Digite o valor de E, P e Q: \n");
     scanf("%lld %lld %lld", &e, &p, &q);
     pq = (p-1)*(q-1);
-
+    if(e<pq){
+        aux=pq;
+        pq=e;
+        e=aux;
+    }
     for(i=0; r!=1; i++)
     {
         q = e/pq;
@@ -124,6 +109,7 @@ void descriptografar()
         s = st[k-2]*(-1);
     }
 
+
     printf("%lld\n%lld", s, t);
 
     descript = fopen("descriptar.txt","w");
@@ -132,13 +118,11 @@ void descriptografar()
     printf("\nDigite a mensagem cript.(obs: digite -1 para encerrar a entrada):\n");
 
     for(i=0; ;i++)
-    {           
+    {
         scanf("%lld", &mensagemC[i]);
         contad++;
         if(mensagemC[i]==-1) break;
     }
-
-    //printf("%lld\n", s);
 
     for(i = 0; i < contad-1; i++){
 		mensagem[i] = expModular(mensagemC[i], s, p*q);
