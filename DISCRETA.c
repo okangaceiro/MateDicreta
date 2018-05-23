@@ -7,7 +7,7 @@ int verPrimo=0;
 long int primo1, primo2;
 long int textocrip[1000];
 long int inverso;
-// invero = (p-1)*(q-1)
+// inverso = (p-1)*(q-1)
 //achar o d para chave privada usada na descriptação
 long long int querod(long int e){
 
