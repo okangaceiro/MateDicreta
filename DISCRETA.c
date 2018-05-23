@@ -42,13 +42,15 @@ void descriptografar(){
     long long int d, p, q, contad=0;
     long long int mensagem[100], mensagemC[100];
     int i=0;
-    FILE *descript;
+    FILE *descript, *porascii;
 
     printf("Digite o valor de D, P e Q: \n");
     scanf("%lld %lld %lld", &d, &p, &q);
 
     descript = fopen("descriptar.txt","w");
     fclose(descript);
+    porascii = fopen("descriptadoemascii.txt", "w");
+    fclose(porascii);
 
     printf("\nDigite a mensagem cript.(obs: digite -1 para encerrar a entrada):\n");
 
@@ -72,6 +74,15 @@ void descriptografar(){
 	}
 
 	fclose(descript);
+	
+	porascii = fopen("descriptadoemascii.txt", "r+");
+
+	for(i = 0; i < contad-1; i++)
+    	{
+        fprintf(porascii, "%c ", mensagem[i]);
+	}
+	fclose(porascii);
+	
 }
 
  void criptografar(){
