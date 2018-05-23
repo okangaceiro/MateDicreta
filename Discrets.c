@@ -10,7 +10,7 @@ long int inverso;
 
 int verificarPrimo(long long int primo){
 
-    long long int i, 
+    long long int i;
     double j;
     long long int cont=0;
 
