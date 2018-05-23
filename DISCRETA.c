@@ -255,7 +255,7 @@ long int gerarChavePublica(){
             fprintf(chavepublic,"N = %ld, E = %ld", primo1*primo2, e);
             fclose (chavepublic);
             privateD = fopen("privateD.txt", "r+");
-            fprintf(chavepublic, "D = %ld, P = %ld, Q = %ld", coloqueinoarquivo, primo1, primo2);
+            fprintf(privateD, "D = %ld, P = %ld, Q = %ld", coloqueinoarquivo, primo1, primo2);
             fclose(privateD);
 
 }
